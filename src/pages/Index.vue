@@ -246,7 +246,8 @@ export default {
   mounted() {
     this.$bind(
       "menus",
-      this.$db.collection("menus").where("type", "!=", "Add-ons")
+      this.$db.collection("menus")
+      // this.$db.collection("menus").where("type", "!=", "Add-ons")
     ).then(menus => {
       this.menus = menus;
     });

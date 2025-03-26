@@ -280,10 +280,7 @@ export default {
     };
   },
   mounted() {
-    this.$bind(
-      "menus",
-      this.$db.collection("menus").where("type", "==", "Add-ons")
-    ).then(addOns => {
+    this.$bind("menus", this.$db.collection("menus")).then(addOns => {
       this.addOns = addOns;
     });
 
