@@ -314,8 +314,8 @@ export default {
           description: this.description,
           imageUrl: this.imageUrl,
           price: this.price,
-          quantity: this.type === "Add-ons " ? 0 : 1,
-          type: this.type,
+          quantity: 1,
+          // type: this.type,
           createdAt: this.$firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
