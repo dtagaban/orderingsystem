@@ -33,7 +33,7 @@
           <q-btn
             :loading="loading"
             :disable="email === '' || password === ''"
-            @click="logInWithEmailAndPassword()"
+            @click="createAccount()"
             class="full-width"
             no-caps
             size="18px"
