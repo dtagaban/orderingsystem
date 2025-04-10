@@ -14,11 +14,11 @@ const routes = [
         path: "basket",
         component: () => import("pages/Basket.vue")
       },
-      {
-        name: "Order History",
-        path: "order_history",
-        component: () => import("pages/OrderHistory.vue")
-      },
+      // {
+      //   name: "Order History",
+      //   path: "order_history",
+      //   component: () => import("pages/OrderHistory.vue")
+      // },
       {
         name: "Dashboard",
         path: "dashboard",
