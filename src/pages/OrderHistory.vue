@@ -485,7 +485,7 @@
 import { sumBy } from "lodash";
 export default {
   mounted() {
-    // this.loadOrder("Pending");
+    this.loadOrder("Pending");
   },
   data() {
     return {

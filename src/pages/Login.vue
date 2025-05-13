@@ -3,11 +3,14 @@
     <q-page-container>
       <q-page class="flex flex-center q-pa-lg">
         <q-card style="width: 500px" class="text-center q-pa-md">
-          <q-img
-            class="q-mb-xl q-mt-xl"
-            style="width: 290px;"
-            src="~assets/logo.jpg"
-          />
+          <q-card-section>
+            <q-img
+              class="q-mb-xl q-mt-xl"
+              style="width: 290px;"
+              src="~assets/logo.jpg"
+            />
+            <div class="text-h5">Login</div>
+          </q-card-section>
           <q-input
             class="full-width q-mb-sm"
             color="red"
@@ -17,7 +20,7 @@
           />
           <q-input
             :type="isPwd ? 'password' : 'text'"
-            class="full-width q-mb-md"
+            class="full-width"
             color="red"
             v-model="password"
             label="Password"
@@ -30,6 +33,16 @@
               />
             </template>
           </q-input>
+          <div class="text-right">
+          <q-btn
+            class="q-mb-lg q-mt-xs"
+            no-caps
+            to="/forgot_password"
+            color="red"
+            label="Forgot password?"
+            flat
+          />
+          </div>
           <q-btn
             :loading="loading"
             :disable="email === '' || password === ''"
@@ -39,16 +52,18 @@
             size="18px"
             color="red"
             unelevated
+            icon="login"
             rounded
-            label="Sign in"
+            label="Login in"
           />
           <q-btn
             :disable="email === '' || password === ''"
             :loading="accountLoading"
-            class="q-mt-xs"
+            class="q-mt-sn"
+            no-caps
             color="red"
             to="signup"
-            label="Create an Account"
+            label="Do not have an account yet? Create one."
             flat
           />
         </q-card>

@@ -3,11 +3,14 @@
     <q-page-container>
       <q-page class="flex flex-center q-pa-lg">
         <q-card style="width: 500px" class="text-center q-pa-md">
-          <q-img
-            class="q-mb-xl  q-mt-xl"
-            style="width: 180px;"
-            src="~assets/logo.jpg"
-          />
+          <q-card-section>
+            <q-img
+              class="q-mb-xl q-mt-xl"
+              style="width: 290px;"
+              src="~assets/logo.jpg"
+            />
+            <div class="text-h5">Register</div>
+          </q-card-section>
           <q-input
             class="full-width q-mb-sm"
             color="red"
@@ -30,6 +33,21 @@
               />
             </template>
           </q-input>
+          <q-input
+            :type="isPwd ? 'password' : 'text'"
+            class="full-width q-mb-lg"
+            color="red"
+            v-model="confirmPassword"
+            label="Confirm Password"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
           <q-btn
             :loading="loading"
             :disable="email === '' || password === ''"
@@ -40,12 +58,13 @@
             color="red"
             unelevated
             rounded
+            icon="save"
             label="Sign up"
           />
           <q-btn
             :disable="email === '' || password === ''"
             :loading="accountLoading"
-            class="q-mt-xs"
+            class="q-mt-sm"
             color="red"
             to="login"
             label="Back to login"
@@ -71,34 +90,45 @@ export default {
       loading: false,
       isPwd: true,
       email: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     };
   },
   methods: {
     createAccount() {
+      if (this.password === this.confirmPassword) {
       this.accountLoading = true;
-      this.$firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(userCredential => {
-          // Signed in
-          var user = userCredential.user;
-          this.accountLoading = false;
-          // ...
-        })
-        .catch(error => {
-          this.accountLoading = false;
-          var errorCode = error.code;
-          var errorMessage = error.message;
+        this.$firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(userCredential => {
+            // Signed in
+            var user = userCredential.user;
+            this.accountLoading = false;
+            // ...
+          })
+          .catch(error => {
+            this.accountLoading = false;
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            this.$q.notify({
+              position: "top-left",
+              icon: "close",
+              timeout: 1500,
+              message: error.message,
+              color: "negative"
+            });
+            // ..
+          });
+      } else {
           this.$q.notify({
             position: "top-left",
             icon: "close",
             timeout: 1500,
-            message: error.message,
+            message: 'Passwords do not match.',
             color: "negative"
           });
-          // ..
-        });
+      }
     },
     logInWithFacebook() {
       var provider = new this.$firebase.auth.FacebookAuthProvider();

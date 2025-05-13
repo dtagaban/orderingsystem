@@ -14,11 +14,11 @@ const routes = [
         path: "basket",
         component: () => import("pages/Basket.vue")
       },
-      // {
-      //   name: "Order History",
-      //   path: "order_history",
-      //   component: () => import("pages/OrderHistory.vue")
-      // },
+      {
+        name: "Order History",
+        path: "order_history",
+        component: () => import("pages/OrderHistory.vue")
+      },
       {
         name: "Dashboard",
         path: "dashboard",
@@ -33,6 +33,10 @@ const routes = [
   },
   { path: "/login", component: () => import("pages/Login.vue") },
   { path: "/signup", component: () => import("pages/Signup.vue") },
+  {
+    path: "/forgot_password",
+    component: () => import("pages/ForgotPassword.vue")
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
