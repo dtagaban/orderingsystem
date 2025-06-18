@@ -121,6 +121,18 @@
             <q-input
               class="full-width q-mb-md"
               color="red"
+              v-model="phoneNumber"
+              label="Phone Number"
+            />
+            <q-input
+              class="full-width q-mb-md"
+              color="red"
+              v-model="address"
+              label="Address"
+            />
+            <q-input
+              class="full-width q-mb-md"
+              color="red"
               :value="$q.localStorage.getItem('user').email"
               readonly
               label="Email"
@@ -138,11 +150,15 @@ export default {
     return {
       editLayout: false,
       displayName: "",
+      address: "",
+      phoneNumber: "",
       loading: false
     };
   },
   mounted() {
     this.displayName = this.$q.localStorage.getItem("user").displayName;
+    this.address = this.$q.localStorage.getItem("user").address;
+    this.phoneNumber = this.$q.localStorage.getItem("user").phoneNumber;
   },
   methods: {
     updateProfile() {
@@ -152,13 +168,17 @@ export default {
         .doc(this.$q.localStorage.getItem("user").uid)
         .set(
           {
-            displayName: this.displayName
+            displayName: this.displayName,
+            phoneNumber: this.phoneNumber,
+            address: this.address
           },
           { merge: true }
         )
         .then(data => {
           const user = this.$q.localStorage.getItem("user");
           user.displayName = this.displayName;
+          user.phoneNumber = this.phoneNumber;
+          user.address = this.address;
           this.$q.localStorage.set("user", user);
           this.loading = false;
           this.$q.notify({
@@ -199,7 +219,7 @@ export default {
             .signOut()
             .then(() => {
               this.$q.localStorage.remove("user");
-              this.$router.push("/login");
+              this.$router.push("/landing");
             })
             .catch(error => {});
         })

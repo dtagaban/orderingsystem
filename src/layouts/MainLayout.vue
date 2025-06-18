@@ -23,6 +23,16 @@
           aria-label="Menu"
           icon="qr_code_scanner"
         /> -->
+        <q-btn
+          class="q-mr-sm"
+          flat
+          dense
+          to="chat"
+          color="white"
+          round
+          aria-label="Menu"
+          icon="chat"
+        />
 
         <q-btn
           flat

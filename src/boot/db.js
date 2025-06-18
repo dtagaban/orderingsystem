@@ -34,6 +34,7 @@ export default async ({ router, Vue }) => {
 
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
+      const info = LocalStorage.getItem("info");
       db.collection("users")
         .doc(user.uid)
         .get()
@@ -41,9 +42,10 @@ export default async ({ router, Vue }) => {
           if (!doc.exists) {
             console.log("docc data", doc);
             const currentUser = {
-              displayName: user.displayName,
+              displayName: info.name,
               email: user.email,
-              phoneNumber: user.phoneNumber,
+              address: info.address,
+              phoneNumber: info.phoneNumber,
               photURL: user.photoURL,
               providerId: user.providerId,
               uid: user.uid,
@@ -82,7 +84,7 @@ export default async ({ router, Vue }) => {
     const currentUser = LocalStorage.getItem("user");
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     if (requiresAuth && !currentUser) {
-      next("/login");
+      next("/landing");
     } else if (!requiresAuth && currentUser) {
       next("/");
     } else {

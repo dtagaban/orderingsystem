@@ -72,6 +72,20 @@
           <q-btn @click="logInWithGoogle()"  icon="ion-logo-google" class="full-width q-mt-md" no-caps size="18px" color="red" outline rounded label="Log in with Google" />
           <q-btn @click="logInWithFacebook()" icon="ion-logo-facebook" class="full-width q-mt-md" no-caps size="18px" color="blue" outline rounded label="Log in with Facebook" />
         </div> -->
+
+        <q-page-sticky
+          position="top-left"
+          :offset="[18, 18]"
+        >
+          <q-btn
+            to="landing"
+            color="red"
+            label="Back to home"
+            no-caps
+            flat
+            icon="home"
+          />
+        </q-page-sticky>
       </q-page>
     </q-page-container>
   </q-layout>

@@ -14,6 +14,27 @@
           <q-input
             class="full-width q-mb-sm"
             color="red"
+            v-model="name"
+            label="Name"
+            type="text"
+          />
+          <q-input
+            class="full-width q-mb-sm"
+            color="red"
+            v-model="phoneNumber"
+            label="Phone Number"
+            type="text"
+          />
+          <q-input
+            class="full-width q-mb-sm"
+            color="red"
+            v-model="address"
+            label="Address"
+            type="text"
+          />
+          <q-input
+            class="full-width q-mb-sm"
+            color="red"
             v-model="email"
             label="Email"
             type="email"
@@ -72,6 +93,19 @@
           />
         </q-card>
 
+        <q-page-sticky
+          position="top-left"
+          :offset="[18, 18]"
+        >
+          <q-btn
+            to="landing"
+            color="red"
+            label="Back to home"
+            no-caps
+            flat
+            icon="home"
+          />
+        </q-page-sticky>
         <!-- <div class="full-width">
           <q-btn @click="logInWithGoogle()"  icon="ion-logo-google" class="full-width q-mt-md" no-caps size="18px" color="red" outline rounded label="Log in with Google" />
           <q-btn @click="logInWithFacebook()" icon="ion-logo-facebook" class="full-width q-mt-md" no-caps size="18px" color="blue" outline rounded label="Log in with Facebook" />
@@ -91,11 +125,19 @@ export default {
       isPwd: true,
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      name: "",
+      phoneNumber: "",
+      address: ""
     };
   },
   methods: {
     createAccount() {
+      this.$q.localStorage.set("info", {
+        name: this.name,
+        phoneNumber: this.phoneNumber,
+        address: this.address
+      });
       if (this.password === this.confirmPassword) {
       this.accountLoading = true;
         this.$firebase

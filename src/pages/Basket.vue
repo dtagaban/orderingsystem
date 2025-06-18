@@ -148,6 +148,18 @@
                 </q-item-section>
               </q-item>
             </q-list>
+            <q-item-label header class="text-h6 q-mt-lg">Payment</q-item-label>
+            <q-card class="my-card">
+              <q-img src="~assets/gcash.jpg" />
+
+              <q-card-section>
+                <div class="text-subtitle2">Scan the qrcode to send your payment.</div>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                {{ lorem }}
+              </q-card-section>
+            </q-card>
 
             <q-separator
               spaced

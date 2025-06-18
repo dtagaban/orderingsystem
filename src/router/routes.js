@@ -25,12 +25,18 @@ const routes = [
         component: () => import("pages/Dashboard.vue")
       },
       {
+        name: "Chat",
+        path: "chat",
+        component: () => import("pages/Chat.vue")
+      },
+      {
         name: "Account",
         path: "account",
         component: () => import("pages/Account.vue")
       }
     ]
   },
+  { path: "/landing", component: () => import("pages/Landing.vue") },
   { path: "/login", component: () => import("pages/Login.vue") },
   { path: "/signup", component: () => import("pages/Signup.vue") },
   {
