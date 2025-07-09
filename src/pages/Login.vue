@@ -120,7 +120,7 @@ export default {
           var errorCode = error.code;
           var errorMessage = error.message;
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             icon: "close",
             timeout: 1500,
             message: error.message,
@@ -193,23 +193,45 @@ export default {
         });
     },
     logInWithEmailAndPassword() {
+      this.$q.localStorage.set("action", "login");
       this.loading = true;
       this.$firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(userCredential => {
-          // Signed in
           var user = userCredential.user;
-          this.$q.localStorage.set("user", user);
-          // this.$router.push('/')
-          this.loading = false;
+
+          this.$db.collection("users")
+          .doc(user.uid)
+          .get()
+          .then(doc => {
+            
+            console.log('docdocdoc', doc.data().isAdmin)
+            // Signed in
+            if (user.emailVerified || doc.data().isAdmin) {
+              this.$q.localStorage.set("user", doc.data());
+              this.$router.push('/')
+            } else {
+              this.$q.notify({
+                position: "top-right",
+                icon: "close",
+                timeout: 1500,
+                message: 'Email not verified',
+                color: "negative"
+              });
+            }
+            this.loading = false;
+          })
+          .catch(error => {
+          });
+          
           // ...
         })
         .catch(error => {
           this.loading = false;
           console.log(error);
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             icon: "close",
             timeout: 1500,
             message: error.message,

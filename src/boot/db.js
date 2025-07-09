@@ -34,7 +34,9 @@ export default async ({ router, Vue }) => {
 
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
+      console.log('useruser', user.emailVerified)
       const info = LocalStorage.getItem("info");
+      const action = LocalStorage.getItem("action");
       db.collection("users")
         .doc(user.uid)
         .get()
@@ -55,20 +57,22 @@ export default async ({ router, Vue }) => {
               .doc(user.uid)
               .set(currentUser)
               .then(res => {
-                console.log("ress", currentUser);
-                LocalStorage.set("user", currentUser);
-                router.push("/").catch(() => {});
+                // console.log("ress", currentUser);
+                // LocalStorage.set("user", currentUser);
+                // router.push("/landing").catch(() => {});
               })
               .catch(error => {
                 LocalStorage.remove("user");
               });
           } else {
-            LocalStorage.set("user", doc.data());
-            if (doc.data().isKitchen) {
-              router.push("/order_history").catch(() => {});
-            } else {
-              router.push("/").catch(() => {});
-            }
+            // if (action === 'login') {
+            //   LocalStorage.set("user", doc.data());
+            //   if (doc.data().isKitchen) {
+            //     router.push("/order_history").catch(() => {});
+            //   } else {
+            //     router.push("/").catch(() => {});
+            //   }
+            // }
           }
         })
         .catch(error => {

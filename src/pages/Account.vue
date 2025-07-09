@@ -182,7 +182,7 @@ export default {
           this.$q.localStorage.set("user", user);
           this.loading = false;
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             timeout: 1500,
             icon: "check",
             message: "Profile has been successfully updated.",
@@ -191,7 +191,7 @@ export default {
         })
         .catch(() => {
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             timeout: 1500,
             icon: "close",
             message: "Error!",

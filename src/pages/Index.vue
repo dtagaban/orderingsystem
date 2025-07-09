@@ -151,7 +151,7 @@
                 </q-item-section>
               </q-item>
 
-              <div
+              <!-- <div
                 class="q-pa-md q-gutter-md"
                 v-if="!$q.localStorage.getItem('user').isAdmin"
               >
@@ -168,7 +168,7 @@
                   unelevated
                   color="red"
                 />
-              </div>
+              </div> -->
             </q-list>
           </q-page>
         </q-page-container>
@@ -294,6 +294,7 @@ export default {
       this.menuData = menu;
     },
     submitReview() {
+      console.log('adada')
       this.$db
         .collection("reviews")
         .add({
@@ -327,7 +328,7 @@ export default {
           this.addMenuLayout = false;
 
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             timeout: 1500,
             icon: "check",
             message: "Menu has been succesfully added.",
@@ -355,7 +356,7 @@ export default {
               })
               .then(() => {
                 this.$q.notify({
-                  position: "top-left",
+                  position: "top-right",
                   icon: "check",
                   timeout: 1500,
                   message: "Item been added to cart succesfully.",
@@ -364,7 +365,7 @@ export default {
               });
           } else {
             this.$q.notify({
-              position: "top-left",
+              position: "top-right",
               timeout: 1500,
               icon: "warning",
               message: "Item has been already added to cart.",

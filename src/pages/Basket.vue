@@ -104,13 +104,20 @@
 
         <q-footer class="bg-white">
           <q-toolbar>
-            <q-toolbar-title></q-toolbar-title>
+            <q-toolbar-title class="text-black">
+                Total price: {{$sortBy(
+                  carts.filter(cart => cart.isChecked),
+                  ['menu.type', 'createdAt']
+                ).reverse().reduce((sum, item) => {
+  return sum + (parseFloat(item.menu.price) * parseFloat(item.menu.quantity));
+}, 0).toFixed(2)}}
+              
+            </q-toolbar-title>
             <q-btn
               label="Place order"
               :disable="tableNumber === ''"
               @click="placeOrder()"
               size="17px"
-              class="full-width"
               no-caps
               color="red"
               dense
@@ -121,6 +128,7 @@
 
         <q-page-container>
           <q-page class="q-pa-lg">
+            <!-- <pre></pre> -->
             <q-list>
               <q-item-label header class="text-h6">Orders</q-item-label>
               <q-item
@@ -156,9 +164,9 @@
                 <div class="text-subtitle2">Scan the qrcode to send your payment.</div>
               </q-card-section>
 
-              <q-card-section class="q-pt-none">
-                {{ lorem }}
-              </q-card-section>
+              <!-- <q-card-section class="q-pt-none"> -->
+                <!-- {{ lorem }} -->
+              <!-- </q-card-section> -->
             </q-card>
 
             <q-separator
@@ -310,7 +318,7 @@ export default {
         ).length > 4
       ) {
         this.$q.notify({
-          position: "top-left",
+          position: "top-right",
           timeout: 1500,
           icon: "warning",
           message: "Choose more than 4 unlimited flavors only.",
@@ -362,7 +370,7 @@ export default {
             })
             .then(() => {
               this.$q.notify({
-                position: "top-left",
+                position: "top-right",
                 timeout: 1500,
                 icon: "check",
                 message: "Order has been succesfully placed.",

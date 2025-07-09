@@ -133,6 +133,7 @@ export default {
   },
   methods: {
     createAccount() {
+      this.$q.localStorage.set("action", "signup");
       this.$q.localStorage.set("info", {
         name: this.name,
         phoneNumber: this.phoneNumber,
@@ -147,6 +148,23 @@ export default {
             // Signed in
             var user = userCredential.user;
             this.accountLoading = false;
+            this.$router.push("/landing").catch(() => {});
+            user.sendEmailVerification()
+            .then(() => {
+              this.$q.notify({
+                position: "top-right",
+                icon: "check",
+                timeout: 1500,
+                message: 'Verification email sent.',
+                color: "positive"
+              });
+              console.log("Verification email sent.");
+              // You can show a message like "Check your inbox"
+            })
+            .catch((error) => {
+              console.error("Error sending verification email:", error);
+            });
+
             // ...
           })
           .catch(error => {
@@ -154,7 +172,7 @@ export default {
             var errorCode = error.code;
             var errorMessage = error.message;
             this.$q.notify({
-              position: "top-left",
+              position: "top-right",
               icon: "close",
               timeout: 1500,
               message: error.message,
@@ -164,7 +182,7 @@ export default {
           });
       } else {
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             icon: "close",
             timeout: 1500,
             message: 'Passwords do not match.',
@@ -236,12 +254,14 @@ export default {
         });
     },
     logInWithEmailAndPassword() {
+      this.$q.localStorage.set("action", "login");
       this.loading = true;
       this.$firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(userCredential => {
           // Signed in
+          console.log('userCredential12', userCredential)
           var user = userCredential.user;
           this.$q.localStorage.set("user", user);
           // this.$router.push('/')
@@ -252,7 +272,7 @@ export default {
           this.loading = false;
           console.log(error);
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             icon: "close",
             timeout: 1500,
             message: error.message,

@@ -66,7 +66,7 @@ export default {
         .then(() => {
           this.loading = false;
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             icon: "check",
             timeout: 1500,
             message: "Password reset email sent!",
@@ -84,7 +84,7 @@ export default {
             errorMessage = "There is no user record corresponding to this email.";
           }
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             icon: "close",
             timeout: 2000,
             message: errorMessage,

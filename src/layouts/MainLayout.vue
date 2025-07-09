@@ -286,7 +286,7 @@ export default {
         },
         function(error) {
           this.$q.notify({
-            position: "top-left",
+            position: "top-right",
             timeout: 1500,
             icon: "close",
             message: "Scanning failed" + error,

@@ -163,7 +163,7 @@
                   ><q-btn
                     @click="markAsCancelled(order)"
                     unelevated
-                    label="Mark as Cancelled"
+                    label="Mark as Cancelled/Refunded"
                     color="negative"
                 /></q-item-label>
               </q-item-section>
@@ -205,7 +205,7 @@
                       ? order.user.displayName
                       : ""
                   }}</q-item-label
-                >
+              >              
                 <!-- <q-item-label v-if="$q.localStorage.getItem('user').isAdmin"
                   >Table Number: {{ order.tableNumber }}</q-item-label
                 > -->
@@ -227,7 +227,31 @@
                   <q-item-label caption
                     >Price: Php {{ menu.price }}</q-item-label
                   >
+
+                  <div
+                class="q-pa-md q-gutter-md"
+                v-if="!$q.localStorage.getItem('user').isAdmin"
+              >
+                <q-input
+                  dense
+                  :autogrow="false"
+                  v-model="menu.review"
+                  
+                  placeholder="Write review"
+                />
+                <q-rating dense v-model="rating" :max="5" size="27px" /> <br />
+                <q-btn
+                  @click="submitReview(menu)"
+                  label="Submit"
+                  dense
+                  icon="send"
+                  unelevated
+                  color="red"
+                />
+              </div>
                 </q-item-section>
+
+                
               </q-item>
             </q-list>
 
@@ -491,6 +515,8 @@ export default {
     return {
       totalPrice: 0,
       sumBy,
+      rating: 5,
+      review: "",
       tab: "Pending",
       orders: []
     };
@@ -517,6 +543,21 @@ export default {
           });
         }
       }
+    },
+    submitReview(menuId) {
+      console.log('menuId', menuId)
+      this.$db
+        .collection("reviews")
+        .add({
+          user: this.$q.localStorage.getItem("user"),
+          menuId: menuId.menuId,
+          review: menuId.review,
+          rating: this.rating,
+          createdAt: this.$firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+          this.review = "";
+        });
     },
     markAsCancelled(order) {
       this.$q
